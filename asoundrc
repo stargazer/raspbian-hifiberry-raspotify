@@ -1,0 +1,7 @@
+pcm.plug0 = {
+ type plug
+ card sndrpihifiberry
+ slave {
+   pcm "hw:0,0"
+ }
+}
