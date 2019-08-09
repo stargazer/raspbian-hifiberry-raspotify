@@ -10,9 +10,15 @@ cd raspbian-hifiberry-raspotify
 make setup
 ```
 
-### How to run raspotify
+### Start/stop service
 
 ```sh
-cd ${HOME}
-./run.sh
+sudo systemctl start raspotify
+sudo systemctl stop raspotify
+```
+
+### Follow log
+
+```sh
+sudo tail -f /var/log/syslog
 ```
