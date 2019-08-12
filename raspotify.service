@@ -3,7 +3,7 @@ Description=Custom service to run raspotify.
 After=network.target alsa-restore.service alsa-state.service alsa-utils.service
 
 [Service]
-ExecStart=/bin/bash /usr/local/bin/raspotify.sh
+ExecStart=/usr/local/bin/raspotify.sh
 Restart=always
 RestartSec=10
 

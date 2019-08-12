@@ -2,6 +2,11 @@
 
 Installs and configures [raspotify](https://github.com/dtcooper/raspotify) on a [Raspberry Pi](https://www.raspberrypi.org/) running the [Raspbian](https://raspbian.org/) distribution with a [HifiBerry](https://www.hifiberry.com/) sound card.
 
+The idea is to install a custom `raspotify` systemd service, running a set of
+hardcoded parameters. As soon as `raspotify` starts, an extra service called `journal-watch` is ran, that makes sure that as soon as any ERROR-level messages
+appear in `raspotify`'s logs, the whole system is reboot. I know it's drastic,
+but this is the only way I could deal with `librespot`'s glitches.
+
 ### How to install
 
 ```sh

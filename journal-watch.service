@@ -1,0 +1,11 @@
+[Unit]
+Description=Custom service to monitor raspotify's logs, and reboot the system when necessary.
+After=raspotify.service
+
+[Service]
+ExecStart=/usr/local/bin/journal-watch.sh
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

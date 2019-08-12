@@ -3,8 +3,8 @@ setup: \
 	install-raspotify \
 	configure-alsa \
 	disable-raspotify-service \
-	install-cli-script \
-	enable-custom-service
+	install-cli-scripts \
+	enable-custom-services
 
 disable-onboard-soundcard:
 	sudo touch /etc/modprobe.d/soundcard-blacklist.conf
@@ -18,14 +18,23 @@ configure-alsa:
 
 disable-raspotify-service:
 	sudo systemctl disable raspotify 2&>1
-	sudo rm -f /lib/systemd/system/raspotify.service
 
-install-cli-script:
+install-cli-scripts:
 	sudo cp -f `pwd`/raspotify.sh /usr/local/bin/.
 	sudo chmod a+x /usr/local/bin/raspotify.sh
 
-enable-custom-service:
+	sudo cp -f `pwd`/journal-watch.sh /usr/local/bin/.
+	sudo chmod a+x /usr/local/bin/journal-watch.sh
+
+enable-custom-services:
 	sudo cp -f `pwd`/raspotify.service /lib/systemd/system/raspotify.service
 	sudo chmod 644 /lib/systemd/system/raspotify.service
+
+	sudo cp -f `pwd`/journal-watch.service /lib/systemd/system/journal-watch.service
+	sudo chmod 644 /lib/systemd/system/journal-watch.service
+
+	sudo systemctl daemon-reload
 	sudo systemctl start raspotify
 	sudo systemctl enable raspotify
+	sudo systemctl start journal-watch
+	sudo systemctl enable journal-watch
