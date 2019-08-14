@@ -9,7 +9,9 @@ setup: \
 	configure-alsa \
 	install-cargo \
 	install-librespot \
-	install-librespot-service
+	install-librespot-service \
+	install-journal-watch \
+	install-journal-watch-service
 
 disable-onboard-soundcard:
 	sudo touch ${KERNEL_MODULES_DIR}/blacklist-onboard-soundcard.conf
@@ -33,3 +35,14 @@ install-librespot-service:
 	sudo systemctl daemon-reload
 	sudo systemctl restart librespot
 	sudo systemctl enable librespot
+
+install-journal-watch:
+	sudo cp -f `pwd`/journal-watch.sh ${BIN_DIR}/.
+	sudo chmod a+x ${BIN_DIR}/journal-watch.sh
+
+install-journal-watch-service:
+	sudo cp -f `pwd`/journal-watch.service ${SERVICE_DIR}/.
+	sudo chmod 644 ${SERVICE_DIR}/journal-watch.service
+	sudo systemctl daemon-reload
+	sudo systemctl restart journal-watch
+	sudo systemctl enable journal-watch

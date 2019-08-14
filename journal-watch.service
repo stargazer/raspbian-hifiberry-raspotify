@@ -1,0 +1,11 @@
+[Unit]
+Description=Journal-watch
+After=librespot.service
+
+[Service]
+ExecStart=/usr/local/bin/journal-watch.sh
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
