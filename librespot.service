@@ -1,0 +1,13 @@
+[Unit]
+Description=Librespot service.
+After=network.target alsa-restore.service alsa-state.service alsa-utils.service
+
+[Service]
+User=nobody
+Group=audio
+Restart=always
+RestartSec=10
+ExecStart=/usr/local/bin/librespot --name HifiBerry --bitrate 320 --linear-volume --initial-volume=100 --disable-audio-cache -v
+
+[Install]
+WantedBy=multi-user.target
