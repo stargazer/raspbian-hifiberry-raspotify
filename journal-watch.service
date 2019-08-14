@@ -1,6 +1,6 @@
 [Unit]
-Description=Custom service to monitor raspotify's logs, and reboot the system when necessary.
-After=raspotify.service
+Description=Journal-watch
+After=librespot.service
 
 [Service]
 ExecStart=/usr/local/bin/journal-watch.sh

@@ -1,40 +1,48 @@
+KERNEL_MODULES_DIR=/etc/modprobe.d
+BIN_DIR=/usr/local/bin
+SERVICE_DIR=/lib/systemd/system
+CARGO_DIR=/home/pi/.cargo/bin
+LIBRESPOT_DIR=${PWD}/librespot/target/release
+
 setup: \
 	disable-onboard-soundcard \
-	install-raspotify \
 	configure-alsa \
-	disable-raspotify-service \
-	install-cli-scripts \
-	enable-custom-services
+	install-cargo \
+	install-librespot \
+	install-librespot-service \
+	install-journal-watch \
+	install-journal-watch-service
 
 disable-onboard-soundcard:
-	sudo touch /etc/modprobe.d/soundcard-blacklist.conf
-	echo 'blacklist snd_bcm2835' | sudo tee /etc/modprobe.d/soundcard-blacklist.conf
-
-install-raspotify:
-	curl -sL https://dtcooper.github.io/raspotify/install.sh | sh
+	sudo touch ${KERNEL_MODULES_DIR}/blacklist-onboard-soundcard.conf
+	echo 'blacklist snd_bcm2835' | sudo tee ${KERNEL_MODULES_DIR}/blacklist-onboard-soundcard.conf
 
 configure-alsa:
 	sudo cp -f `pwd`/asound.conf /etc/.
 
-disable-raspotify-service:
-	sudo systemctl disable raspotify 2&>1
+install-cargo:
+	curl https://sh.rustup.rs -sSf | sh
 
-install-cli-scripts:
-	sudo cp -f `pwd`/raspotify.sh /usr/local/bin/.
-	sudo chmod a+x /usr/local/bin/raspotify.sh
+install-librespot:
+	sudo apt-get install -y build-essential libasound2-dev
+	git clone https://github.com/librespot-org/librespot.git
+	${CARGO_DIR}/cargo build --manifest-path=`pwd`/librespot/Cargo.toml --release
+	sudo cp -f ${LIBRESPOT_DIR}/librespot ${BIN_DIR}/.
 
-	sudo cp -f `pwd`/journal-watch.sh /usr/local/bin/.
-	sudo chmod a+x /usr/local/bin/journal-watch.sh
-
-enable-custom-services:
-	sudo cp -f `pwd`/raspotify.service /lib/systemd/system/raspotify.service
-	sudo chmod 644 /lib/systemd/system/raspotify.service
-
-	sudo cp -f `pwd`/journal-watch.service /lib/systemd/system/journal-watch.service
-	sudo chmod 644 /lib/systemd/system/journal-watch.service
-
+install-librespot-service:
+	sudo cp -f `pwd`/librespot.service ${SERVICE_DIR}/librespot.service
+	sudo chmod 644 ${SERVICE_DIR}/librespot.service
 	sudo systemctl daemon-reload
-	sudo systemctl start raspotify
-	sudo systemctl enable raspotify
-	sudo systemctl start journal-watch
+	sudo systemctl restart librespot
+	sudo systemctl enable librespot
+
+install-journal-watch:
+	sudo cp -f `pwd`/journal-watch.sh ${BIN_DIR}/.
+	sudo chmod a+x ${BIN_DIR}/journal-watch.sh
+
+install-journal-watch-service:
+	sudo cp -f `pwd`/journal-watch.service ${SERVICE_DIR}/.
+	sudo chmod 644 ${SERVICE_DIR}/journal-watch.service
+	sudo systemctl daemon-reload
+	sudo systemctl restart journal-watch
 	sudo systemctl enable journal-watch
