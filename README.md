@@ -2,10 +2,10 @@
 
 Installs and configures [librespot](https://github.com/librespot-org/librespot) on a [Raspberry Pi](https://www.raspberrypi.org/) running the [Raspbian](https://raspbian.org/) distribution with a [HifiBerry](https://www.hifiberry.com/) sound card.
 
-As soon as `raspotify` starts, an extra service called `journal-watch` is ran.
-`journal-watch` parses `raspotify`'s log and reboots the system when any
-ERROR-level messages appear. I know it's drastic,
-but this is the only way I could deal with `librespot`'s glitches and most
+As soon as `librespot` starts, an extra service called `journal-watch` is ran.
+`journal-watch` parses `librespot`'s log and restarts it when any
+ERROR-level messages appear.
+This is the only reasonable way to deal with `librespot`'s glitches and most
 notably the one described [here](https://github.com/librespot-org/librespot/issues/241).
 [This comment](https://github.com/librespot-org/librespot/issues/134#issuecomment-441499150) actually suggests
 a cronjob-based solution. I think a service-based solution is way better.
