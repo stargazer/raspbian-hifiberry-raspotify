@@ -2,7 +2,8 @@ KERNEL_MODULES_DIR=/etc/modprobe.d
 BIN_DIR=/usr/local/bin
 SERVICE_DIR=/lib/systemd/system
 CARGO_DIR=/home/pi/.cargo/bin
-LIBRESPOT_DIR=${PWD}/librespot/target/release
+LIBRESPOT_SRC_DIR=${PWD}/librespot
+LIBRESPOT_BIN_DIR=${LIBRESPOT_SRC_DIR}/target/release
 
 setup: \
 	disable-onboard-soundcard \
@@ -11,7 +12,8 @@ setup: \
 	install-librespot \
 	install-librespot-service \
 	install-journal-watch \
-	install-journal-watch-service
+	install-journal-watch-service \
+	cleanup
 
 disable-onboard-soundcard:
 	sudo touch ${KERNEL_MODULES_DIR}/blacklist-onboard-soundcard.conf
@@ -26,8 +28,8 @@ install-cargo:
 install-librespot:
 	sudo apt-get install -y build-essential libasound2-dev
 	git clone https://github.com/librespot-org/librespot.git
-	${CARGO_DIR}/cargo build --manifest-path=`pwd`/librespot/Cargo.toml --release
-	sudo cp -f ${LIBRESPOT_DIR}/librespot ${BIN_DIR}/.
+	${CARGO_DIR}/cargo build --manifest-path=${LIBRESPOT_SRC_DIR}/Cargo.toml --release
+	sudo cp -f ${LIBRESPOT_BIN_DIR}/librespot ${BIN_DIR}/.
 
 install-librespot-service:
 	sudo cp -f `pwd`/librespot.service ${SERVICE_DIR}/librespot.service
@@ -46,3 +48,6 @@ install-journal-watch-service:
 	sudo systemctl daemon-reload
 	sudo systemctl restart journal-watch
 	sudo systemctl enable journal-watch
+
+cleanup:
+	rm -rf ${LIBRESPOT_SRC_DIR}
