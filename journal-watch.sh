@@ -8,6 +8,6 @@ while read line
 do
   match=$(echo "$line" | grep -E "$REGEX")
   if [[ $match ]];
-    then sudo systemctl restart librespot
+    then sudo reboot
   fi
 done
