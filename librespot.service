@@ -7,7 +7,7 @@ User=nobody
 Group=audio
 Restart=always
 RestartSec=10
-ExecStart=/usr/local/bin/librespot --name HifiBerry --bitrate 320 --initial-volume=100 --disable-audio-cache --verbose
+ExecStart=/usr/local/bin/librespot --name HifiBerry --bitrate 320 --initial-volume=100 --disable-audio-cache --backend alsa --verbose
 
 [Install]
 WantedBy=multi-user.target

@@ -32,7 +32,7 @@ install-librespot:
 
 	wget https://github.com/librespot-org/librespot/archive/refs/tags/v${LIBRESPOT_VERSION}.tar.gz
 	tar -xf ${LIBRESPOT_TAR_FILE}
-	${CARGO_DIR}/cargo build --manifest-path=${LIBRESPOT_SRC_DIR}/Cargo.toml --release
+	${CARGO_DIR}/cargo build --manifest-path=${LIBRESPOT_SRC_DIR}/Cargo.toml --release --features alsa-backend
 	sudo cp -f ${LIBRESPOT_BIN_DIR}/librespot ${BIN_DIR}/.
 
 install-librespot-service:
