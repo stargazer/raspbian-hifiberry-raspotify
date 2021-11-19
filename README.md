@@ -10,10 +10,10 @@ notably the one described [here](https://github.com/librespot-org/librespot/issu
 [This comment](https://github.com/librespot-org/librespot/issues/134#issuecomment-441499150) actually suggests
 a cronjob-based solution. I think a service-based solution is way better.
 
-I'd like to emphasize that if you often get *Connection reset by peer" errors,
-there's is probably something wrong with your network. I had the same for way
+I'd like to emphasize that if you often get *"Connection reset by peer"* errors,
+there is probably something wrong with your network. I had the same for way
 too long time. I had tried all solutions, and installed various different
-versiond of `librespot` and other related tools. Nothing solved it. It turned out that once I
+versions of `librespot` and other related tools. Nothing solved it. It turned out that once I
 switched from using my raspberrypi's ethernet connection to wifi, I never
 got it again. Go figure!
 
