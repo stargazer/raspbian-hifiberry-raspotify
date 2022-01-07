@@ -15,6 +15,7 @@ setup: \
 	install-librespot-service \
 	install-journal-watch \
 	install-journal-watch-service \
+	disable-wifi-power-management \
 	cleanup
 
 disable-onboard-soundcard:
@@ -52,6 +53,10 @@ install-journal-watch-service:
 	sudo systemctl daemon-reload
 	sudo systemctl restart journal-watch
 	sudo systemctl enable journal-watch
+
+disable-wifi-power-management:
+	# Writes the appropriate line in `/etc/rc.local`, right before the line `exit 0`
+	sed -i "/exit 0/i\/sbin/iw wlan0 set power_save off" /etc/rc.local
 
 cleanup:
 	rm -rf ${LIBRESPOT_SRC_DIR}

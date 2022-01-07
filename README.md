@@ -17,6 +17,10 @@ versions of `librespot` and other related tools. Nothing solved it. It turned ou
 switched from using my raspberrypi's ethernet connection to wifi, I never
 got it again. Go figure!
 
+#### Note
+
+This package has been tested and works with Raspbian Buster (2019).
+
 ### How to install
 
 ```sh
