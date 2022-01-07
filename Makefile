@@ -16,6 +16,7 @@ setup: \
 	install-journal-watch \
 	install-journal-watch-service \
 	disable-wifi-power-management \
+	enable-noroot-logins \
 	cleanup
 
 disable-onboard-soundcard:
@@ -57,6 +58,11 @@ install-journal-watch-service:
 disable-wifi-power-management:
 	# Writes the appropriate line in `/etc/rc.local`, right before the line `exit 0`
 	sed -i "/exit 0/i\/sbin/iw wlan0 set power_save off" /etc/rc.local
+
+enable-noroot-logins:
+	# Comments out the line `auth requisite pam_nologin.so` from `/etc/pam.d/login`,
+	# thus allowing no-root logins during boot
+	sed -i '/pam_nologin/s/^#\?/#/'  /etc/pam.d/login
 
 cleanup:
 	rm -rf ${LIBRESPOT_SRC_DIR}
