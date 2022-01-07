@@ -19,7 +19,8 @@ got it again. Go figure!
 
 #### Note
 
-This package has been tested and works with Raspbian Buster (2019).
+This package has been tested with Raspbian Buster, both with Linux kernel 4.*
+and 5.*.
 
 ### How to install
 

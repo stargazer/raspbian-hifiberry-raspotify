@@ -9,6 +9,7 @@ LIBRESPOT_BIN_DIR=${LIBRESPOT_SRC_DIR}/target/release
 
 setup: \
 	disable-onboard-soundcard \
+	kernel-4-5-compatibility \
 	configure-alsa \
 	install-cargo \
 	install-librespot \
@@ -22,6 +23,11 @@ setup: \
 disable-onboard-soundcard:
 	sudo touch ${KERNEL_MODULES_DIR}/blacklist-onboard-soundcard.conf
 	echo 'blacklist snd_bcm2835' | sudo tee ${KERNEL_MODULES_DIR}/blacklist-onboard-soundcard.conf
+
+kernel-4-5-compatibility:
+	echo "\n" | sudo tee -a /boot/config.txt
+	echo "force_eeprom_read=0\n" | sudo tee -a /boot/config.txt
+	echo "dtoverlay=hifiberry-dacplus" | sudo tee -a /boot/config.txt
 
 configure-alsa:
 	sudo cp -f `pwd`/asound.conf /etc/.
