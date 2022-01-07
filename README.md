@@ -19,7 +19,7 @@ got it again. Go figure!
 
 #### Note
 
-This package has been tested with Raspbian Buster, both with Linux kernel 4.*
+This package has been tested with Raspbian Buster, with Linux kernels 4.*
 and 5.*.
 
 ### How to install
