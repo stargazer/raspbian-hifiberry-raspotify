@@ -38,6 +38,7 @@ install-cargo:
 install-librespot:
 	sudo apt-get install -y build-essential libasound2-dev
 
+	# TODO: It looks that currently the `dev` branch of the `librespot` repo is the one that's stable and fixes a bunch of issues. I should ensure that here I simply checkout that branch and build the application.
 	wget https://github.com/librespot-org/librespot/archive/refs/tags/v${LIBRESPOT_VERSION}.tar.gz
 	tar -xf ${LIBRESPOT_TAR_FILE}
 	${CARGO_DIR}/cargo build --manifest-path=${LIBRESPOT_SRC_DIR}/Cargo.toml --release --features alsa-backend
