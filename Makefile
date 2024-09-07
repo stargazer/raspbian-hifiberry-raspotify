@@ -59,7 +59,8 @@ install-journal-watch-service:
 	sudo chmod 644 ${SERVICE_DIR}/journal-watch.service
 	sudo systemctl daemon-reload
 	sudo systemctl restart journal-watch
-	sudo systemctl enable journal-watch
+	sudo systemctl disable journal-watch
+	sudo systemctl stop journal-watch
 
 disable-wifi-power-management:
 	# Writes the appropriate line in `/etc/rc.local`, right before the line `exit 0`
